@@ -1,958 +1,990 @@
-.age-group p {
-            color: #475569;
-            margin: 8px 0 0 0;
-        }<!DOCTYPE html>
+</div> <!-- End body-content -->
+
+<script>
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+        const navLinks = document.getElementById('navLinks');
+        navLinks.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const navLinks = document.getElementById('navLinks');
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+            navLinks.classList.remove('active');
+        }
+    });<!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jugend in Deutschland - Infografiken</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jugend in Deutschland - Infografiken</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        color: #1e293b;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    .main-header {
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(129, 55, 114, 0.2);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo {
+        background: linear-gradient(135deg, #813772, #a855f7);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 1.125rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(129, 55, 114, 0.3);
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-link {
+        color: #e2e8f0;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #813772, #a855f7);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .btn-login {
+        color: #e2e8f0;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-login:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .btn-register {
+        background: linear-gradient(135deg, #813772, #a855f7);
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(129, 55, 114, 0.3);
+    }
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(129, 55, 114, 0.4);
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    /* Mobile Navigation */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            flex-direction: column;
+            padding: 24px;
+            gap: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1e293b;
-            line-height: 1.6;
-            overflow-x: hidden;
+        .nav-links.active {
+            display: flex;
         }
-        
+
+        .mobile-menu-toggle {
+            display: block;
+        }
+
+        .auth-buttons {
+            gap: 12px;
+        }
+
+        .btn-login, .btn-register {
+            font-size: 0.9rem;
+            padding: 8px 16px;
+        }
+    }
+
+    /* Adjust body padding for fixed header */
+    .body-content {
+        padding-top: 80px;
+    }
+    
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 60px;
+        padding: 60px 0;
+        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 55, 114, 0.1);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .header h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #813772, #a855f7, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+    }
+    
+    .header p {
+        font-size: 1.25rem;
+        color: #64748b;
+        font-weight: 400;
+    }
+    
+    .infographic {
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 24px;
+        border: 1px solid rgba(129, 55, 114, 0.1);
+        margin-bottom: 32px;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transition: all 0.3s ease;
+    }
+    
+    .infographic:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 25px 50px -12px rgba(129, 55, 114, 0.25);
+        border-color: rgba(129, 55, 114, 0.2);
+    }
+    
+    .infographic-header {
+        background: linear-gradient(135deg, #813772, #9333ea);
+        color: white;
+        padding: 32px;
+        text-align: center;
+        border-bottom: 1px solid rgba(129, 55, 114, 0.1);
+    }
+    
+    .infographic-header h2 {
+        margin: 0;
+        font-size: 1.875rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+    
+    .infographic-content {
+        padding: 40px;
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 400px;
+        margin: 32px 0;
+        background: #f1f5f9;
+        border-radius: 16px;
+        padding: 20px;
+        border: 2px solid #813772;
+        min-height: 400px;
+    }
+    
+    .chart-container::before {
+        content: 'Chart wird geladen...';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #813772;
+        font-weight: 600;
+        z-index: 1;
+    }
+    
+    .chart-container canvas {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin: 40px 0;
+    }
+    
+    .stat-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+        padding: 32px;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid rgba(129, 55, 114, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #813772, #a855f7, #3b82f6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(129, 55, 114, 0.2);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 1));
+        box-shadow: 0 20px 25px -5px rgba(129, 55, 114, 0.1), 0 10px 10px -5px rgba(129, 55, 114, 0.04);
+    }
+    
+    .stat-card:hover::before {
+        opacity: 1;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #813772, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+    }
+    
+    .stat-label {
+        font-size: 1.125rem;
+        color: #475569;
+        font-weight: 500;
+    }
+    
+    .comparison-bars {
+        margin: 40px 0;
+    }
+    
+    .bar-item {
+        margin-bottom: 24px;
+    }
+    
+    .bar-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-weight: 600;
+        font-size: 1.125rem;
+        color: #334155;
+    }
+    
+    .bar-container {
+        background: rgba(129, 55, 114, 0.08);
+        border-radius: 12px;
+        overflow: hidden;
+        height: 48px;
+        border: 1px solid rgba(129, 55, 114, 0.1);
+    }
+    
+    .bar-fill {
+        height: 100%;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 16px;
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    }
+    
+    .bar-family { background: linear-gradient(135deg, #813772, #a855f7); }
+    .bar-partnership { background: linear-gradient(135deg, #667eea, #764ba2); }
+    .bar-goals { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+    .bar-friendship { background: linear-gradient(135deg, #fdbb2d, #22c1c3); }
+    .bar-faith { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
+    
+    .age-comparison {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin: 40px 0;
+    }
+    
+    .age-group {
+        text-align: center;
+        padding: 32px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+        border-radius: 20px;
+        border: 1px solid rgba(129, 55, 114, 0.1);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .age-group:hover {
+        transform: translateY(-4px);
+        border-color: rgba(129, 55, 114, 0.2);
+        box-shadow: 0 20px 25px -5px rgba(129, 55, 114, 0.1), 0 10px 10px -5px rgba(129, 55, 114, 0.04);
+    }
+    
+    .age-group h3 {
+        margin-top: 0;
+        color: #813772;
+        font-size: 1.375rem;
+        font-weight: 600;
+    }
+    
+    .age-group p {
+        color: #475569;
+        margin: 8px 0 0 0;
+    }
+    
+    .highlight {
+        background: linear-gradient(135deg, rgba(129, 55, 114, 0.1), rgba(168, 85, 247, 0.05));
+        padding: 24px;
+        border-radius: 16px;
+        margin: 32px 0;
+        border: 1px solid rgba(129, 55, 114, 0.2);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .highlight strong {
+        color: #813772;
+    }
+    
+    .media-icons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 24px;
+        margin: 40px 0;
+    }
+    
+    .media-icon {
+        text-align: center;
+        padding: 32px 24px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+        border-radius: 20px;
+        border: 1px solid rgba(129, 55, 114, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .media-icon:hover {
+        transform: translateY(-8px) scale(1.02);
+        border-color: rgba(129, 55, 114, 0.2);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 1));
+        box-shadow: 0 20px 25px -5px rgba(129, 55, 114, 0.1), 0 10px 10px -5px rgba(129, 55, 114, 0.04);
+    }
+    
+    .media-icon-emoji {
+        font-size: 3.5rem;
+        margin-bottom: 16px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+    
+    .media-percentage {
+        font-size: 1.75rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #813772, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+    }
+    
+    .media-name {
+        font-size: 1.125rem;
+        color: #475569;
+        font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 60px 0;
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            border-radius: 24px;
-            border: 1px solid rgba(129, 55, 114, 0.1);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .header h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #813772, #a855f7, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-        }
-        
-        .header p {
-            font-size: 1.25rem;
-            color: #64748b;
-            font-weight: 400;
-        }
-        
-        .infographic {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 24px;
-            border: 1px solid rgba(129, 55, 114, 0.1);
-            margin-bottom: 32px;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s ease;
-        }
-        
-        .infographic:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 25px 50px -12px rgba(129, 55, 114, 0.25);
-            border-color: rgba(129, 55, 114, 0.2);
-        }
-        
-        .infographic-header {
-            background: linear-gradient(135deg, #813772, #9333ea);
-            color: white;
-            padding: 32px;
-            text-align: center;
-            border-bottom: 1px solid rgba(129, 55, 114, 0.1);
-        }
-        
-        .infographic-header h2 {
-            margin: 0;
-            font-size: 1.875rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
+            padding: 16px;
         }
         
         .infographic-content {
-            padding: 40px;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin: 32px 0;
-            background: rgba(129, 55, 114, 0.05);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(129, 55, 114, 0.15);
+            padding: 24px;
         }
         
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin: 40px 0;
+            grid-template-columns: 1fr;
+            gap: 16px;
         }
-        
-        .stat-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
-            padding: 32px;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid rgba(129, 55, 114, 0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #813772, #a855f7, #3b82f6);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(129, 55, 114, 0.2);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 1));
-            box-shadow: 0 20px 25px -5px rgba(129, 55, 114, 0.1), 0 10px 10px -5px rgba(129, 55, 114, 0.04);
-        }
-        
-        .stat-card:hover::before {
-            opacity: 1;
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #813772, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-            letter-spacing: -0.02em;
-        }
-        
-        .stat-label {
-            font-size: 1.125rem;
-            color: #475569;
-            font-weight: 500;
-        }
-        
-        .comparison-bars {
-            margin: 40px 0;
-        }
-        
-        .bar-item {
-            margin-bottom: 24px;
-        }
-        
-        .bar-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            font-weight: 600;
-            font-size: 1.125rem;
-            color: #334155;
-        }
-        
-        .bar-container {
-            background: rgba(129, 55, 114, 0.08);
-            border-radius: 12px;
-            overflow: hidden;
-            height: 48px;
-            border: 1px solid rgba(129, 55, 114, 0.1);
-        }
-        
-        .bar-fill {
-            height: 100%;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 16px;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
-        }
-        
-        .bar-family { background: linear-gradient(135deg, #813772, #a855f7); }
-        .bar-partnership { background: linear-gradient(135deg, #667eea, #764ba2); }
-        .bar-goals { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
-        .bar-friendship { background: linear-gradient(135deg, #fdbb2d, #22c1c3); }
-        .bar-faith { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
         
         .age-comparison {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 40px 0;
-        }
-        
-        .age-group {
-            text-align: center;
-            padding: 32px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
-            border-radius: 20px;
-            border: 1px solid rgba(129, 55, 114, 0.1);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .age-group:hover {
-            transform: translateY(-4px);
-            border-color: rgba(129, 55, 114, 0.2);
-            box-shadow: 0 20px 25px -5px rgba(129, 55, 114, 0.1), 0 10px 10px -5px rgba(129, 55, 114, 0.04);
-        }
-        
-        .age-group h3 {
-            margin-top: 0;
-            color: #813772;
-            font-size: 1.375rem;
-            font-weight: 600;
-        }
-        
-        .highlight {
-            background: linear-gradient(135deg, rgba(129, 55, 114, 0.1), rgba(168, 85, 247, 0.05));
-            padding: 24px;
-            border-radius: 16px;
-            margin: 32px 0;
-            border: 1px solid rgba(129, 55, 114, 0.2);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .highlight strong {
-            color: #813772;
+            grid-template-columns: 1fr;
         }
         
         .media-icons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 24px;
-            margin: 40px 0;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
         
-        .media-icon {
-            text-align: center;
-            padding: 32px 24px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
-            border-radius: 20px;
-            border: 1px solid rgba(129, 55, 114, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        .chart-container {
+            height: 300px;
+            padding: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header {
+            padding: 40px 20px;
         }
         
-        .media-icon:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(129, 55, 114, 0.2);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 1));
-            box-shadow: 0 20px 25px -5px rgba(129, 55, 114, 0.1), 0 10px 10px -5px rgba(129, 55, 114, 0.04);
+        .media-icons {
+            grid-template-columns: 1fr;
         }
         
-        .media-icon-emoji {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        .stat-card {
+            padding: 24px;
         }
-        
-        .media-percentage {
-            font-size: 1.75rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #813772, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-        
-        .media-name {
-            font-size: 1.125rem;
-            color: #475569;
-            font-weight: 500;
-        }
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-            
-            .infographic-content {
-                padding: 24px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            
-            .age-comparison {
-                grid-template-columns: 1fr;
-            }
-            
-            .media-icons {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-            
-            .chart-container {
-                height: 300px;
-                padding: 16px;
-            }
-        }
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
 
-        @media (max-width: 480px) {
-            .header {
-                padding: 40px 20px;
-            }
-            
-            .media-icons {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-card {
-                padding: 24px;
-            }
+    /* Loading animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
         }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        /* Loading animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .infographic {
+        animation: fadeInUp 0.8s ease-out;
+    }
 
-        .infographic {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .infographic:nth-child(2) { animation-delay: 0.1s; }
-        .infographic:nth-child(3) { animation-delay: 0.2s; }
-        .infographic:nth-child(4) { animation-delay: 0.3s; }
-        .infographic:nth-child(5) { animation-delay: 0.4s; }
-        .infographic:nth-child(6) { animation-delay: 0.5s; }
-    </style>
+    .infographic:nth-child(2) { animation-delay: 0.1s; }
+    .infographic:nth-child(3) { animation-delay: 0.2s; }
+    .infographic:nth-child(4) { animation-delay: 0.3s; }
+    .infographic:nth-child(5) { animation-delay: 0.4s; }
+    .infographic:nth-child(6) { animation-delay: 0.5s; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📊 Jugend in Deutschland 2024</h1>
-            <p>Studie mit 6.000 Teilnehmern • Altersgruppen 14-69 Jahre</p>
+<!-- Header -->
+<header class="main-header">
+    <div class="header-container">
+        <div class="logo-section">
+            <a href="https://www.mrjugendarbeit.com/" class="logo">MRJ</a>
         </div>
-
-        <!-- Religiosität und Glaube -->
-        <div class="infographic">
-            <div class="infographic-header">
-                <h2>🙏 Religiosität und Glaube</h2>
-            </div>
-            <div class="infographic-content">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">31%</div>
-                        <div class="stat-label">glauben an persönlichen Gott<br>(14-29 Jahre)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">33%</div>
-                        <div class="stat-label">finden Halt im Glauben<br>(schwere Zeiten)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">55%</div>
-                        <div class="stat-label">bekennen sich zu einer Religion</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">45%</div>
-                        <div class="stat-label">gehören keiner Religion an</div>
-                    </div>
-                </div>
-
-                <h3>Religiöse Zugehörigkeit bei Jugendlichen</h3>
-                <div class="chart-container">
-                    <canvas id="religionChart"></canvas>
-                </div>
-
-                <div class="highlight">
-                    <strong>Trend:</strong> Der Glaube an einen persönlichen Gott ist bei jungen Menschen stärker ausgeprägt als bei älteren Generationen (25% bei 30-49 Jahren, 24% bei 50-69 Jahren).
-                </div>
-            </div>
+        
+        <nav class="nav-links" id="navLinks">
+            <a href="https://www.mrjugendarbeit.com/" class="nav-link">Startseite</a>
+            <a href="https://www.mrjugendarbeit.com/featured/" class="nav-link">Exklusive Artikel</a>
+            <a href="https://www.mrjugendarbeit.com/spenden/" class="nav-link">Jetzt unterstützen</a>
+        </nav>
+        
+        <div class="auth-buttons">
+            <a href="https://www.mrjugendarbeit.com/signin/" class="btn-login">Login</a>
+            <a href="https://www.mrjugendarbeit.com/signup/" class="btn-register">Registrieren</a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                ☰
+            </button>
         </div>
+    </div>
+</header>
 
-        <!-- Lebenswerte und Sinnstifter -->
-        <div class="infographic">
-            <div class="infographic-header">
-                <h2>💎 Was gibt dem Leben Sinn?</h2>
+<div class="body-content">
+<div class="container">
+    <div class="header">
+        <h1>📊 Jugend in Deutschland 2024</h1>
+        <p>Studie mit 6.000 Teilnehmern • Altersgruppen 14-69 Jahre</p>
+    </div>
+
+    <!-- Religiosität und Glaube -->
+    <div class="infographic">
+        <div class="infographic-header">
+            <h2>🙏 Religiosität und Glaube</h2>
+        </div>
+        <div class="infographic-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">31%</div>
+                    <div class="stat-label">glauben an persönlichen Gott<br>(14-29 Jahre)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">33%</div>
+                    <div class="stat-label">finden Halt im Glauben<br>(schwere Zeiten)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">55%</div>
+                    <div class="stat-label">bekennen sich zu einer Religion</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45%</div>
+                    <div class="stat-label">gehören keiner Religion an</div>
+                </div>
             </div>
-            <div class="infographic-content">
-                <h3>Die wichtigsten Sinnstifter (14-29 Jahre)</h3>
-                <div class="comparison-bars">
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>👨‍👩‍👧‍👦 Familie</span>
-                            <span>59%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill bar-family" style="width: 59%;">59%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>💕 Partnerschaft/Liebe</span>
-                            <span>36%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill bar-partnership" style="width: 36%;">36%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>🎯 Ziele im Leben</span>
-                            <span>33%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill bar-goals" style="width: 33%;">33%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>👥 Freundschaften</span>
-                            <span>30%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill bar-friendship" style="width: 30%;">30%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>🙏 Glaube (Platz 11)</span>
-                            <span>12%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill bar-faith" style="width: 12%;">12%</div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="highlight">
-                    <strong>Wichtige Tugenden:</strong> Ehrlichkeit, Zuverlässigkeit, Hilfsbereitschaft und Höflichkeit stehen hoch im Kurs bei jungen Menschen.
-                </div>
+            <h3>Religiöse Zugehörigkeit bei Jugendlichen</h3>
+            <div class="chart-container">
+                <canvas id="religionChart"></canvas>
+            </div>
+
+            <div class="highlight">
+                <strong>Trend:</strong> Der Glaube an einen persönlichen Gott ist bei jungen Menschen stärker ausgeprägt als bei älteren Generationen (25% bei 30-49 Jahren, 24% bei 50-69 Jahren).
             </div>
         </div>
+    </div>
 
-        <!-- Glaube nach Altersgruppen -->
-        <div class="infographic">
-            <div class="infographic-header">
-                <h2>📈 Glaube im Generationenvergleich</h2>
+    <!-- Lebenswerte und Sinnstifter -->
+    <div class="infographic">
+        <div class="infographic-header">
+            <h2>💎 Was gibt dem Leben Sinn?</h2>
+        </div>
+        <div class="infographic-content">
+            <h3>Die wichtigsten Sinnstifter (14-29 Jahre)</h3>
+            <div class="comparison-bars">
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>👨‍👩‍👧‍👦 Familie</span>
+                        <span>59%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill bar-family" style="width: 59%;">59%</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>💕 Partnerschaft/Liebe</span>
+                        <span>36%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill bar-partnership" style="width: 36%;">36%</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>🎯 Ziele im Leben</span>
+                        <span>33%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill bar-goals" style="width: 33%;">33%</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>👥 Freundschaften</span>
+                        <span>30%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill bar-friendship" style="width: 30%;">30%</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>🙏 Glaube (Platz 11)</span>
+                        <span>12%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill bar-faith" style="width: 12%;">12%</div>
+                    </div>
+                </div>
             </div>
-            <div class="infographic-content">
-                <h3>Glaube an persönlichen Gott nach Altersgruppen</h3>
-                <div class="age-comparison">
-                    <div class="age-group">
-                        <h3>14-29 Jahre</h3>
-                        <div class="stat-number" style="color: #813772;">31%</div>
-                        <p style="color: #475569;">Höchster Anteil aller Altersgruppen</p>
-                    </div>
-                    <div class="age-group">
-                        <h3>30-49 Jahre</h3>
-                        <div class="stat-number" style="color: #a855f7;">25%</div>
-                        <p style="color: #475569;">Mittlere Generation</p>
-                    </div>
-                    <div class="age-group">
-                        <h3>50-69 Jahre</h3>
-                        <div class="stat-number" style="color: #3b82f6;">24%</div>
-                        <p style="color: #475569;">Ältere Generation</p>
-                    </div>
-                </div>
 
-                <div class="chart-container">
-                    <canvas id="ageComparisonChart"></canvas>
-                </div>
+            <div class="highlight">
+                <strong>Wichtige Tugenden:</strong> Ehrlichkeit, Zuverlässigkeit, Hilfsbereitschaft und Höflichkeit stehen hoch im Kurs bei jungen Menschen.
             </div>
         </div>
+    </div>
 
-        <!-- Mediennutzung -->
-        <div class="infographic">
-            <div class="infographic-header">
-                <h2>📱 Mediennutzung der Jugend</h2>
+    <!-- Glaube nach Altersgruppen -->
+    <div class="infographic">
+        <div class="infographic-header">
+            <h2>📈 Glaube im Generationenvergleich</h2>
+        </div>
+        <div class="infographic-content">
+            <h3>Glaube an persönlichen Gott nach Altersgruppen</h3>
+            <div class="age-comparison">
+                <div class="age-group">
+                    <h3>14-29 Jahre</h3>
+                    <div class="stat-number" style="color: #813772;">31%</div>
+                    <p style="color: #475569;">Höchster Anteil aller Altersgruppen</p>
+                </div>
+                <div class="age-group">
+                    <h3>30-49 Jahre</h3>
+                    <div class="stat-number" style="color: #a855f7;">25%</div>
+                    <p style="color: #475569;">Mittlere Generation</p>
+                </div>
+                <div class="age-group">
+                    <h3>50-69 Jahre</h3>
+                    <div class="stat-number" style="color: #3b82f6;">24%</div>
+                    <p style="color: #475569;">Ältere Generation</p>
+                </div>
             </div>
-            <div class="infographic-content">
-                <h3>Wichtigste Informationskanäle (14-29 Jahre)</h3>
-                <div class="media-icons">
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">📱</div>
-                        <div class="media-percentage">53%</div>
-                        <div class="media-name">Soziale Medien</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">🌐</div>
-                        <div class="media-percentage">36%</div>
-                        <div class="media-name">Nachrichten-Websites</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">🔍</div>
-                        <div class="media-percentage">30%</div>
-                        <div class="media-name">Google/Suchmaschinen</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">📺</div>
-                        <div class="media-percentage">30%</div>
-                        <div class="media-name">Fernsehsendungen</div>
-                    </div>
-                </div>
 
-                <h3>Meistgenutzte Apps bei Jugendlichen</h3>
-                <div class="comparison-bars">
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>💬 WhatsApp</span>
-                            <span>92%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="background: linear-gradient(45deg, #25d366, #128c7e); width: 92%;">92%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>📸 Instagram</span>
-                            <span>~75%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="background: linear-gradient(45deg, #833ab4, #fd1d1d); width: 75%;">~75%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>📹 YouTube</span>
-                            <span>~70%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="background: linear-gradient(45deg, #ff0000, #cc0000); width: 70%;">~70%</div>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>🎵 TikTok</span>
-                            <span>50%</span>
-                        </div>
-                        <div class="bar-container">
-                            <div class="bar-fill" style="background: linear-gradient(45deg, #ff0050, #000000); width: 50%;">50%</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="chart-container">
+                <canvas id="ageComparisonChart"></canvas>
             </div>
         </div>
+    </div>
 
-        <!-- Psychische Gesundheit -->
-        <div class="infographic">
-            <div class="infographic-header">
-                <h2>🧠 Psychische Gesundheit</h2>
+    <!-- Mediennutzung -->
+    <div class="infographic">
+        <div class="infographic-header">
+            <h2>📱 Mediennutzung der Jugend</h2>
+        </div>
+        <div class="infographic-content">
+            <h3>Wichtigste Informationskanäle (14-29 Jahre)</h3>
+            <div class="media-icons">
+                <div class="media-icon">
+                    <div class="media-icon-emoji">📱</div>
+                    <div class="media-percentage">53%</div>
+                    <div class="media-name">Soziale Medien</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">🌐</div>
+                    <div class="media-percentage">36%</div>
+                    <div class="media-name">Nachrichten-Websites</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">🔍</div>
+                    <div class="media-percentage">30%</div>
+                    <div class="media-name">Google/Suchmaschinen</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">📺</div>
+                    <div class="media-percentage">30%</div>
+                    <div class="media-name">Fernsehsendungen</div>
+                </div>
             </div>
-            <div class="infographic-content">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">12-13%</div>
-                        <div class="stat-label">in psychiatrischer Behandlung<br>(alle Altersgruppen)</div>
+
+            <h3>Meistgenutzte Apps bei Jugendlichen</h3>
+            <div class="comparison-bars">
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>💬 WhatsApp</span>
+                        <span>92%</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">⬆️</div>
-                        <div class="stat-label">Höherer Behandlungsbedarf<br>bei 14-29-Jährigen</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="background: linear-gradient(45deg, #25d366, #128c7e); width: 92%;">92%</div>
                     </div>
                 </div>
-
-                <h3>Häufige psychische Belastungen bei Jugendlichen</h3>
-                <div class="media-icons">
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">😰</div>
-                        <div class="media-name">Stress</div>
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>📸 Instagram</span>
+                        <span>~75%</span>
                     </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">🤔</div>
-                        <div class="media-name">Selbstzweifel</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">😴</div>
-                        <div class="media-name">Erschöpfung</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">😞</div>
-                        <div class="media-name">Antriebslosigkeit</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">😟</div>
-                        <div class="media-name">Unwohlsein</div>
-                    </div>
-                    <div class="media-icon">
-                        <div class="media-icon-emoji">😔</div>
-                        <div class="media-name">Einsamkeit</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="background: linear-gradient(45deg, #833ab4, #fd1d1d); width: 75%;">~75%</div>
                     </div>
                 </div>
-
-                <div class="highlight">
-                    <strong>Smartphone-Einfluss:</strong> Forscher sehen einen direkten Zusammenhang zwischen der smartphone-geprägten Kindheit und den erhöhten psychischen Belastungen bei jungen Menschen.
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>📹 YouTube</span>
+                        <span>~70%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="background: linear-gradient(45deg, #ff0000, #cc0000); width: 70%;">~70%</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-label">
+                        <span>🎵 TikTok</span>
+                        <span>50%</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="background: linear-gradient(45deg, #ff0050, #000000); width: 50%;">50%</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Religionszugehörigkeit Chart
-        const religionCtx = document.getElementById('religionChart').getContext('2d');
-        new Chart(religionCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Christlich', 'Muslimisch', 'Keine Religion', 'Andere'],
-                datasets: [{
-                    data: [41, 10, 45, 4],
-                    backgroundColor: [
-                        '#813772',
-                        '#a855f7',
-                        '#3b82f6',
-                        '#06b6d4'
-                    ],
-                    borderWidth: 0,
-                    hoverBorderWidth: 3,
-                    hoverBorderColor: '#ffffff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 24,
-                            font: {
-                                size: 14,
-                                family: 'Inter',
-                                weight: '500'
-                            },
-                            color: '#334155',
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        borderColor: 'rgba(129, 55, 114, 0.2)',
-                        borderWidth: 1,
-                        cornerRadius: 12,
-                        titleFont: {
-                            family: 'Inter',
-                            weight: '600'
-                        },
-                        bodyFont: {
-                            family: 'Inter',
-                            weight: '400'
-                        }
-                    }
-                },
-                cutout: '65%',
-                animation: {
-                    animateRotate: true,
-                    duration: 2000,
-                    easing: 'easeOutCubic'
-                }
-            }
-        });
+    <!-- Psychische Gesundheit -->
+    <div class="infographic">
+        <div class="infographic-header">
+            <h2>🧠 Psychische Gesundheit</h2>
+        </div>
+        <div class="infographic-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">12-13%</div>
+                    <div class="stat-label">in psychiatrischer Behandlung<br>(alle Altersgruppen)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">⬆️</div>
+                    <div class="stat-label">Höherer Behandlungsbedarf<br>bei 14-29-Jährigen</div>
+                </div>
+            </div>
 
-        // Altersvergleich Chart
-        const ageCtx = document.getElementById('ageComparisonChart').getContext('2d');
-        new Chart(ageCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Glaube an persönlichen Gott', 'Halt im Glauben'],
-                datasets: [
-                    {
-                        label: '14-29 Jahre',
-                        data: [31, 33],
-                        backgroundColor: '#813772',
-                        borderRadius: 8,
-                        borderSkipped: false,
+            <h3>Häufige psychische Belastungen bei Jugendlichen</h3>
+            <div class="media-icons">
+                <div class="media-icon">
+                    <div class="media-icon-emoji">😰</div>
+                    <div class="media-name">Stress</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">🤔</div>
+                    <div class="media-name">Selbstzweifel</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">😴</div>
+                    <div class="media-name">Erschöpfung</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">😞</div>
+                    <div class="media-name">Antriebslosigkeit</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">😟</div>
+                    <div class="media-name">Unwohlsein</div>
+                </div>
+                <div class="media-icon">
+                    <div class="media-icon-emoji">😔</div>
+                    <div class="media-name">Einsamkeit</div>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>Smartphone-Einfluss:</strong> Forscher sehen einen direkten Zusammenhang zwischen der smartphone-geprägten Kindheit und den erhöhten psychischen Belastungen bei jungen Menschen.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Starting chart initialization...');
+        
+        // Sofortige Initialisierung ohne Warten
+        setTimeout(function() {
+            initCharts();
+        }, 500);
+    });
+
+    function initCharts() {
+        console.log('📊 Chart.js available:', typeof Chart !== 'undefined');
+        
+        if (typeof Chart === 'undefined') {
+            console.error('❌ Chart.js not loaded!');
+            return;
+        }
+
+        // Chart 1: Religion Doughnut
+        const religionCanvas = document.getElementById('religionChart');
+        console.log('🎯 Religion canvas found:', !!religionCanvas);
+        
+        if (religionCanvas) {
+            try {
+                const ctx = religionCanvas.getContext('2d');
+                console.log('🎨 Context created for religion chart');
+                
+                const religionChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Christlich 41%', 'Muslimisch 10%', 'Keine Religion 45%', 'Andere 4%'],
+                        datasets: [{
+                            data: [41, 10, 45, 4],
+                            backgroundColor: ['#813772', '#a855f7', '#3b82f6', '#06b6d4'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
                     },
-                    {
-                        label: '30-49 Jahre',
-                        data: [25, 26],
-                        backgroundColor: '#a855f7',
-                        borderRadius: 8,
-                        borderSkipped: false,
-                    },
-                    {
-                        label: '50-69 Jahre',
-                        data: [24, 25],
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 8,
-                        borderSkipped: false,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#475569',
-                            font: {
-                                family: 'Inter',
-                                weight: '500'
-                            }
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        max: 40,
-                        grid: {
-                            color: 'rgba(129, 55, 114, 0.1)',
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            color: '#475569',
-                            font: {
-                                family: 'Inter',
-                                weight: '400'
-                            },
-                            callback: function(value) {
-                                return value + '%';
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 15,
+                                    color: '#334155'
+                                }
                             }
                         }
                     }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            color: '#334155',
-                            font: {
-                                family: 'Inter',
-                                weight: '500'
-                            },
-                            usePointStyle: true,
-                            pointStyle: 'circle',
-                            padding: 20
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        borderColor: 'rgba(129, 55, 114, 0.2)',
-                        borderWidth: 1,
-                        cornerRadius: 12,
-                        titleFont: {
-                            family: 'Inter',
-                            weight: '600'
-                        },
-                        bodyFont: {
-                            family: 'Inter',
-                            weight: '400'
-                        }
-                    }
-                },
-                animation: {
-                    duration: 2000,
-                    easing: 'easeOutCubic'
-                }
+                });
+                
+                console.log('✅ Religion chart created successfully!');
+                
+                // Verstecke "wird geladen" Text
+                religionCanvas.parentElement.style.setProperty('--loading', 'none');
+                
+            } catch (error) {
+                console.error('❌ Religion chart error:', error);
+                religionCanvas.parentElement.innerHTML = '<div style="text-align: center; padding: 50px; color: #dc2626;">Chart konnte nicht geladen werden: ' + error.message + '</div>';
             }
-        });: 'rgba(255, 255, 255, 0.1)',
-                        borderWidth: 1,
-                        cornerRadius: 12,
-                        titleFont: {
-                            family: 'Inter',
-                            weight: '600'
-                        },
-                        bodyFont: {
-                            family: 'Inter',
-                            weight: '400'
-                        }
-                    }
-                },
-                cutout: '65%',
-                animation: {
-                    animateRotate: true,
-                    duration: 2000,
-                    easing: 'easeOutCubic'
-                }
-            }
-        });
+        }
 
-        // Altersvergleich Chart
-        const ageCtx = document.getElementById('ageComparisonChart').getContext('2d');
-        new Chart(ageCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Glaube an persönlichen Gott', 'Halt im Glauben'],
-                datasets: [
-                    {
-                        label: '14-29 Jahre',
-                        data: [31, 33],
-                        backgroundColor: '#ff6b6b',
-                        borderRadius: 8,
-                        borderSkipped: false,
-                    },
-                    {
-                        label: '30-49 Jahre',
-                        data: [25, 26],
-                        backgroundColor: '#4ecdc4',
-                        borderRadius: 8,
-                        borderSkipped: false,
-                    },
-                    {
-                        label: '50-69 Jahre',
-                        data: [24, 25],
-                        backgroundColor: '#45b7d1',
-                        borderRadius: 8,
-                        borderSkipped: false,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#b0b0b0',
-                            font: {
-                                family: 'Inter',
-                                weight: '500'
-                            }
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        max: 40,
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.1)',
-                            borderDash: [5, 5]
-                        },
-                        ticks: {
-                            color: '#b0b0b0',
-                            font: {
-                                family: 'Inter',
-                                weight: '400'
+        // Chart 2: Age Comparison Bar
+        const ageCanvas = document.getElementById('ageComparisonChart');
+        console.log('📊 Age canvas found:', !!ageCanvas);
+        
+        if (ageCanvas) {
+            try {
+                const ctx = ageCanvas.getContext('2d');
+                console.log('🎨 Context created for age chart');
+                
+                const ageChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Glaube an Gott', 'Halt im Glauben'],
+                        datasets: [
+                            {
+                                label: '14-29 Jahre',
+                                data: [31, 33],
+                                backgroundColor: '#813772'
                             },
-                            callback: function(value) {
-                                return value + '%';
+                            {
+                                label: '30-49 Jahre',
+                                data: [25, 26],
+                                backgroundColor: '#a855f7'
+                            },
+                            {
+                                label: '50-69 Jahre',
+                                data: [24, 25],
+                                backgroundColor: '#3b82f6'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 40,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top'
                             }
                         }
                     }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            color: '#ffffff',
-                            font: {
-                                family: 'Inter',
-                                weight: '500'
-                            },
-                            usePointStyle: true,
-                            pointStyle: 'circle',
-                            padding: 20
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                        borderWidth: 1,
-                        cornerRadius: 12,
-                        titleFont: {
-                            family: 'Inter',
-                            weight: '600'
-                        },
-                        bodyFont: {
-                            family: 'Inter',
-                            weight: '400'
-                        }
-                    }
-                },
-                animation: {
-                    duration: 2000,
-                    easing: 'easeOutCubic'
-                }
+                });
+                
+                console.log('✅ Age chart created successfully!');
+                
+            } catch (error) {
+                console.error('❌ Age chart error:', error);
+                ageCanvas.parentElement.innerHTML = '<div style="text-align: center; padding: 50px; color: #dc2626;">Chart konnte nicht geladen werden: ' + error.message + '</div>';
             }
-        });
-
-        // Animation für die Balken
-        window.addEventListener('load', function() {
-            const bars = document.querySelectorAll('.bar-fill');
-            bars.forEach((bar, index) => {
-                const targetWidth = bar.getAttribute('style').match(/width:\s*(\d+%)/)[1];
-                bar.style.width = '0%';
-                setTimeout(() => {
-                    bar.style.width = targetWidth;
-                }, index * 200 + 500);
-            });
-        });
-
-        // Intersection Observer für scroll-basierte Animationen
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.infographic').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(40px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+        }
+    }
+    
+    // Backup-Initialisierung
+    window.addEventListener('load', function() {
+        console.log('🔄 Window loaded, trying backup initialization...');
+        if (typeof Chart !== 'undefined') {
+            setTimeout(initCharts, 1000);
+        }
+    });
