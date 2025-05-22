@@ -273,29 +273,228 @@
     
     .chart-container {
         position: relative;
-        height: 400px;
         margin: 32px 0;
-        background: #f1f5f9;
+        background: #f8fafc;
         border-radius: 16px;
-        padding: 20px;
-        border: 2px solid #813772;
+        padding: 32px;
+        border: 1px solid rgba(129, 55, 114, 0.15);
         min-height: 400px;
     }
-    
-    .chart-container::before {
-        content: 'Chart wird geladen...';
+
+    /* Custom Doughnut Chart */
+    .custom-doughnut-chart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .doughnut-center {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: conic-gradient(
+            #813772 0deg 147.6deg,
+            #a855f7 147.6deg 183.6deg,
+            #3b82f6 183.6deg 345.6deg,
+            #06b6d4 345.6deg 360deg
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: rotateIn 2s ease-out;
+    }
+
+    .doughnut-center::before {
+        content: '';
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #813772;
-        font-weight: 600;
+        width: 120px;
+        height: 120px;
+        background: #f8fafc;
+        border-radius: 50%;
         z-index: 1;
     }
-    
-    .chart-container canvas {
+
+    .center-text {
         position: relative;
         z-index: 2;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .center-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #813772;
+        line-height: 1;
+    }
+
+    .center-label {
+        font-size: 1rem;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    .doughnut-legend {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .legend-item:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-2px);
+    }
+
+    .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .legend-text {
+        font-weight: 500;
+        color: #334155;
+    }
+
+    /* Custom Bar Chart */
+    .custom-bar-chart {
+        width: 100%;
+    }
+
+    .bar-chart-header h4 {
+        text-align: center;
+        color: #334155;
+        margin-bottom: 32px;
+        font-size: 1.25rem;
+    }
+
+    .bar-chart-content {
+        display: flex;
+        gap: 48px;
+        justify-content: center;
+        margin-bottom: 32px;
+    }
+
+    .bar-group {
+        text-align: center;
+    }
+
+    .bar-group-label {
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 24px;
+        font-size: 1.125rem;
+    }
+
+    .bars-container {
+        display: flex;
+        gap: 16px;
+        align-items: end;
+        height: 200px;
+    }
+
+    .bar-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        min-width: 60px;
+    }
+
+    .bar {
+        width: 48px;
+        border-radius: 8px 8px 0 0;
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 8px;
+        transition: all 0.3s ease;
+        animation: growUp 1.5s ease-out;
+    }
+
+    .bar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(129, 55, 114, 0.3);
+    }
+
+    .bar-age1 { background: linear-gradient(180deg, #813772, #9333ea); }
+    .bar-age2 { background: linear-gradient(180deg, #a855f7, #c084fc); }
+    .bar-age3 { background: linear-gradient(180deg, #3b82f6, #60a5fa); }
+
+    .bar-value {
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .bar-label {
+        font-size: 0.85rem;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    .chart-legend {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    /* Animations */
+    @keyframes rotateIn {
+        from {
+            transform: rotate(-90deg) scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: rotate(0deg) scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes growUp {
+        from {
+            height: 0;
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .bar-chart-content {
+            flex-direction: column;
+            gap: 32px;
+        }
+        
+        .doughnut-legend {
+            grid-template-columns: 1fr;
+        }
+        
+        .chart-legend {
+            flex-direction: column;
+            align-items: center;
+        }
     }
     
     .stats-grid {
@@ -630,7 +829,38 @@
 
             <h3>Religiöse Zugehörigkeit bei Jugendlichen</h3>
             <div class="chart-container">
-                <canvas id="religionChart"></canvas>
+                <div class="custom-doughnut-chart">
+                    <div class="doughnut-center">
+                        <div class="center-text">
+                            <span class="center-number">55%</span>
+                            <span class="center-label">religiös</span>
+                        </div>
+                    </div>
+                    <div class="doughnut-segments">
+                        <div class="segment segment-christian" style="--percentage: 41; --start: 0;"></div>
+                        <div class="segment segment-muslim" style="--percentage: 10; --start: 41;"></div>
+                        <div class="segment segment-none" style="--percentage: 45; --start: 51;"></div>
+                        <div class="segment segment-other" style="--percentage: 4; --start: 96;"></div>
+                    </div>
+                    <div class="doughnut-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #813772;"></span>
+                            <span class="legend-text">Christlich (41%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #a855f7;"></span>
+                            <span class="legend-text">Muslimisch (10%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #3b82f6;"></span>
+                            <span class="legend-text">Keine Religion (45%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #06b6d4;"></span>
+                            <span class="legend-text">Andere (4%)</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="highlight">
@@ -726,7 +956,73 @@
             </div>
 
             <div class="chart-container">
-                <canvas id="ageComparisonChart"></canvas>
+                <div class="custom-bar-chart">
+                    <div class="bar-chart-header">
+                        <h4>Vergleich nach Altersgruppen</h4>
+                    </div>
+                    <div class="bar-chart-content">
+                        <div class="bar-group">
+                            <div class="bar-group-label">Glaube an persönlichen Gott</div>
+                            <div class="bars-container">
+                                <div class="bar-wrapper">
+                                    <div class="bar bar-age1" style="height: 77.5%;">
+                                        <span class="bar-value">31%</span>
+                                    </div>
+                                    <span class="bar-label">14-29</span>
+                                </div>
+                                <div class="bar-wrapper">
+                                    <div class="bar bar-age2" style="height: 62.5%;">
+                                        <span class="bar-value">25%</span>
+                                    </div>
+                                    <span class="bar-label">30-49</span>
+                                </div>
+                                <div class="bar-wrapper">
+                                    <div class="bar bar-age3" style="height: 60%;">
+                                        <span class="bar-value">24%</span>
+                                    </div>
+                                    <span class="bar-label">50-69</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bar-group">
+                            <div class="bar-group-label">Halt im Glauben</div>
+                            <div class="bars-container">
+                                <div class="bar-wrapper">
+                                    <div class="bar bar-age1" style="height: 82.5%;">
+                                        <span class="bar-value">33%</span>
+                                    </div>
+                                    <span class="bar-label">14-29</span>
+                                </div>
+                                <div class="bar-wrapper">
+                                    <div class="bar bar-age2" style="height: 65%;">
+                                        <span class="bar-value">26%</span>
+                                    </div>
+                                    <span class="bar-label">30-49</span>
+                                </div>
+                                <div class="bar-wrapper">
+                                    <div class="bar bar-age3" style="height: 62.5%;">
+                                        <span class="bar-value">25%</span>
+                                    </div>
+                                    <span class="bar-label">50-69</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #813772;"></span>
+                            <span>14-29 Jahre</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #a855f7;"></span>
+                            <span>30-49 Jahre</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background: #3b82f6;"></span>
+                            <span>50-69 Jahre</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
